@@ -27,5 +27,11 @@
     "modifiers": {
       "cruel_season.event.stolen_vitality": true
     }
+  },
+  "starcrossed_lovers": {
+    "card_art": "danger/stolen_vitality.png",
+    "modifiers": {
+      "cruel_season.event.starcrossed_lovers": true
+    }
   }
 }

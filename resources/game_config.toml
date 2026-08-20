@@ -22,6 +22,9 @@ dev_tools = false
     # set to true to also kill a random cat when the leader dies
     stolen_vitality = false
 
+    # set to true to kill mates upon a cats death
+    starcrossed_lovers = false
+
 # settings regarding afterlife affinity
 [affinity]
   # controls how much an affinity change is affected by the cat's compatibility with the afterlife
