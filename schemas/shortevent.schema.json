@@ -462,6 +462,10 @@
         {
           "pattern": "^-?n_c:[0-9]+$",
           "type": "string"
+        },
+        {
+          "pattern": "^-?(n_c|r_c|s_c)[0-9]+$",
+          "type": "string"
         }
       ],
       "title": "GatherCat"
@@ -476,18 +480,6 @@
         "-p_l",
         "s_c",
         "-s_c",
-        "app1",
-        "-app1",
-        "app2",
-        "-app2",
-        "app3",
-        "-app3",
-        "app4",
-        "-app4",
-        "app5",
-        "-app5",
-        "app6",
-        "-app6",
         "clan",
         "-clan",
         "some_clan",
@@ -511,7 +503,23 @@
         "high_aggress",
         "-high_aggress",
         "low_aggress",
-        "-low_aggress"
+        "-low_aggress",
+        "patrol_cats",
+        "-patrol_cats",
+        "apprentice",
+        "-apprentice",
+        "medicine cat apprentice",
+        "-medicine cat apprentice",
+        "warrior",
+        "-warrior",
+        "medicine cat",
+        "-medicine cat",
+        "deputy",
+        "-deputy",
+        "leader",
+        "-leader",
+        "past_deputy",
+        "-past_deputy"
       ],
       "title": "GatherCatEnum",
       "type": "string"
@@ -522,6 +530,38 @@
         "female"
       ],
       "title": "GenderEnum",
+      "type": "string"
+    },
+    "Group": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GroupEnum"
+        },
+        {
+          "pattern": "^match:(.+)$",
+          "type": "string"
+        }
+      ],
+      "title": "Group"
+    },
+    "GroupEnum": {
+      "enum": [
+        "afterlife",
+        "player_clan",
+        "other_clan",
+        "dark_forest",
+        "starclan",
+        "unknown_residence",
+        "no_group",
+        "-afterlife",
+        "-player_clan",
+        "-other_clan",
+        "-dark_forest",
+        "-starclan",
+        "-unknown_residence",
+        "-no_group"
+      ],
+      "title": "GroupEnum",
       "type": "string"
     },
     "Herb": {
@@ -550,7 +590,9 @@
         "goldenrod",
         "poppy",
         "plantain",
-        "catmint"
+        "catmint",
+        "honey",
+        "yew_berries"
       ],
       "title": "Herb",
       "type": "string"
@@ -725,7 +767,7 @@
             "type": "string"
           },
           {
-            "pattern": "^[a-z]+:(camp[0-9]_)*camp[0-9]$",
+            "pattern": "^-?[a-z]+:(camp[0-9]_)*camp[0-9]$",
             "type": "string"
           }
         ]
@@ -791,6 +833,14 @@
             "$ref": "#/$defs/RelationshipStatus"
           },
           "title": "Relationship Status",
+          "type": "array"
+        },
+        "group": {
+          "description": "List of groups m_c can belong to. Defaults to \"player_clan\".",
+          "items": {
+            "$ref": "#/$defs/Group"
+          },
+          "title": "Group",
           "type": "array"
         },
         "skill": {
@@ -930,6 +980,14 @@
           "description": "How the reputation of the Clan changes as a result of this event",
           "title": "Changed",
           "type": "integer"
+        },
+        "temperament": {
+          "description": "The temperament the Clan must have in order for this event to be possible.",
+          "items": {
+            "$ref": "#/$defs/Temperament"
+          },
+          "title": "Temperament",
+          "type": "array"
         }
       },
       "title": "OtherClan",
@@ -975,6 +1033,15 @@
       "title": "OutsiderRep",
       "type": "string"
     },
+    "PointsOfInterestCategoryEnum": {
+      "enum": [
+        "gathering",
+        "moonplace",
+        "terrain"
+      ],
+      "title": "PointsOfInterestCategoryEnum",
+      "type": "string"
+    },
     "PointsOfInterestGroup": {
       "anyOf": [
         {
@@ -982,10 +1049,28 @@
         },
         {
           "$ref": "#/$defs/PointsOfInterestGroupByTags"
+        },
+        {
+          "$ref": "#/$defs/PointsOfInterestGroupByCategory"
         }
       ],
-      "description": "Specifies Points of Interest constraints. Must use EITHER names or tags.",
+      "description": "Specifies Points of Interest constraints. Must use names OR tags OR category (not multiple at once).",
       "title": "PointsOfInterestGroup"
+    },
+    "PointsOfInterestGroupByCategory": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "$ref": "#/$defs/PointsOfInterestCategoryEnum",
+          "description": "The category this POI belongs to.",
+          "title": "Category"
+        }
+      },
+      "required": [
+        "category"
+      ],
+      "title": "PointsOfInterestGroupByCategory",
+      "type": "object"
     },
     "PointsOfInterestGroupByName": {
       "additionalProperties": false,
@@ -1103,6 +1188,14 @@
             "$ref": "#/$defs/RcRelationshipStatus"
           },
           "title": "Relationship Status",
+          "type": "array"
+        },
+        "group": {
+          "description": "List of groups r_c can belong to. Defaults to \"player_clan\".",
+          "items": {
+            "$ref": "#/$defs/Group"
+          },
+          "title": "Group",
           "type": "array"
         },
         "skill": {
@@ -1293,6 +1386,8 @@
     },
     "RelationshipStatus": {
       "enum": [
+        "can_romance",
+        "-can_romance",
         "strangers",
         "siblings",
         "-siblings",
@@ -1309,6 +1404,10 @@
         "-mentor/app",
         "app/mentor",
         "-app/mentor",
+        "past_mentor/app",
+        "-past_mentor/app",
+        "past_app/mentor",
+        "-past_app/mentor",
         "uninterested",
         "fancies",
         "adores",
@@ -1641,7 +1740,9 @@
         "rogue",
         "-rogue",
         "clancat",
-        "-clancat"
+        "-clancat",
+        "guide",
+        "-guide"
       ],
       "title": "Status",
       "type": "string"
@@ -1736,12 +1837,57 @@
         "mid_lives",
         "low_lives",
         "clan:apps",
+        "clan:warrior-like",
         "lost",
         "kit_manipulated",
         "romance",
         "adoption"
       ],
       "title": "TagEnum",
+      "type": "string"
+    },
+    "Temperament": {
+      "description": "Temperaments a Clan or patrol can hold. A \"-\" prefix excludes it.",
+      "enum": [
+        "cunning",
+        "-cunning",
+        "proud",
+        "-proud",
+        "bloodthirsty",
+        "-bloodthirsty",
+        "amiable",
+        "-amiable",
+        "stoic",
+        "-stoic",
+        "wary",
+        "-wary",
+        "gracious",
+        "-gracious",
+        "mellow",
+        "-mellow",
+        "logical",
+        "-logical",
+        "chaotic",
+        "-chaotic",
+        "mercurial",
+        "-mercurial",
+        "calculating",
+        "-calculating",
+        "eager",
+        "-eager",
+        "observant",
+        "-observant",
+        "adaptable",
+        "-adaptable",
+        "decisive",
+        "-decisive",
+        "methodical",
+        "-methodical",
+        "steadfast",
+        "-steadfast",
+        "any"
+      ],
+      "title": "Temperament",
       "type": "string"
     },
     "Trait": {
@@ -1772,7 +1918,6 @@
         "loyal",
         "responsible",
         "shameless",
-        "sneaky",
         "strange",
         "vengeful",
         "wise",
@@ -1811,7 +1956,6 @@
         "-loyal",
         "-responsible",
         "-shameless",
-        "-sneaky",
         "-strange",
         "-vengeful",
         "-wise",
