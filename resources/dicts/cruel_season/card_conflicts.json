@@ -5,5 +5,6 @@
     "seasons": ["always_newleaf", "always_greenleaf", "always_leaf-fall", "always_leaf-bare"],
     "litters": ["underpopulated", "mouths_to_feed"],
     "leader_life_count": ["weak_stars", "forsaken"],
-    "starting_herbs": ["barren_stocks", "meagre_stocks"]
+    "starting_herbs": ["barren_stocks", "meagre_stocks"],
+    "no_mates": ["heartless", "starcrossed_lovers"]
 }
